@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isTeacher() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    match /submissions/{submissionId} {
+      allow create: if request.auth != null
+        && request.auth.token.firebase.sign_in_provider == 'anonymous'
+        && request.resource.data.keys().hasAll([
+          'caseId', 'bookTitle', 'chapter', 'className', 'seatNumber',
+          'pageNumber', 'evidence', 'reflection', 'submittedAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'caseId', 'bookTitle', 'chapter', 'className', 'seatNumber',
+          'pageNumber', 'evidence', 'reflection', 'submittedAt'
+        ])
+        && request.resource.data.caseId is string
+        && request.resource.data.caseId.size() <= 40
+        && request.resource.data.bookTitle is string
+        && request.resource.data.bookTitle.size() > 0
+        && request.resource.data.bookTitle.size() <= 80
+        && request.resource.data.chapter is string
+        && request.resource.data.chapter.size() > 0
+        && request.resource.data.chapter.size() <= 100
+        && request.resource.data.className is string
+        && request.resource.data.className.size() > 0
+        && request.resource.data.className.size() <= 20
+        && request.resource.data.seatNumber is int
+        && request.resource.data.seatNumber >= 1
+        && request.resource.data.seatNumber <= 80
+        && request.resource.data.pageNumber is int
+        && request.resource.data.pageNumber >= 1
+        && request.resource.data.pageNumber <= 999
+        && request.resource.data.evidence is string
+        && request.resource.data.evidence.size() >= 8
+        && request.resource.data.evidence.size() <= 600
+        && request.resource.data.reflection is string
+        && request.resource.data.reflection.size() >= 4
+        && request.resource.data.reflection.size() <= 400
+        && request.resource.data.submittedAt == request.time;
+      allow read, list: if isTeacher();
+      allow delete: if isTeacher();
+      allow update: if false;
+    }
+
+    match /admins/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+  }
+}
