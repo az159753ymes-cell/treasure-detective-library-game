@@ -110,6 +110,18 @@
     .cipher-actions .action{min-width:min(300px,100%);min-height:64px;font-size:1.1rem}
     .classified-stamp{position:absolute;right:clamp(26px,5vw,64px);top:clamp(22px,4vw,48px);display:grid;place-items:center;width:98px;height:98px;border:4px double #ae4c3e;border-radius:50%;color:#ae4c3e;font-weight:1000;line-height:1.2;text-align:center;letter-spacing:.12em;transform:rotate(12deg);font-size:1rem;opacity:.88}
     @media(max-width:680px){.detective-select>div{padding:22px 14px}.agency-message{padding:12px}.cipher-panel{padding:26px 22px;border-left-width:6px;gap:8px}.cipher-meta{display:grid;grid-template-columns:1fr 1fr;font-size:.78rem}.cipher-meta span:last-child{grid-column:1/-1}.classified-stamp{width:68px;height:68px;font-size:.7rem;right:16px;top:14px}.agency-message h1{font-size:2.7rem;padding-right:54px}.cipher-body{font-size:1.02rem;line-height:1.8}.cipher-actions{align-items:stretch}.cipher-actions .action{width:100%;min-width:0}}
+    /* 滿版調查現場：移除置中外框與周圍留白，讓場景從開場一路延伸。 */
+    html,body{width:100%;min-height:100%;margin:0}
+    body{min-height:100vh;min-height:100dvh;background:#473b2d}
+    .app{width:100%;min-height:100vh;min-height:100dvh;padding:0;display:block;background:linear-gradient(180deg,#342a1c20,#342a1c55),url('assets/detective-office.png') center/cover no-repeat}
+    .shell{width:100%;min-height:100vh;min-height:100dvh;border:0;border-radius:0;box-shadow:none;background:transparent;display:flex;flex-direction:column}
+    .topbar{flex:0 0 68px;background:#f3f0e8ed;backdrop-filter:blur(8px)}
+    main{flex:1;min-height:calc(100vh - 105px);min-height:calc(100dvh - 105px)}
+    .screen{min-height:calc(100vh - 105px);min-height:calc(100dvh - 105px)}
+    footer{flex:0 0 37px;background:#eae7dfed;backdrop-filter:blur(8px)}
+    .detective-select{background:linear-gradient(90deg,#f7f3e7a6,#f7f3e780);}
+    .agency-message{background:linear-gradient(90deg,#49361fa8,#372d1c9c);}
+    @media(max-width:680px){.topbar{flex-basis:58px}main,.screen{min-height:calc(100vh - 95px);min-height:calc(100dvh - 95px)}.shell{min-height:100vh;min-height:100dvh}}
   </style>
 </head>
 <body><div class="app"><div class="shell"><header class="topbar"><div class="brand"><span class="agency-name">毛利偵探事務所</span></div><div class="status"><div class="progress"><i class="dot on"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i></div><span id="timer" class="timer">10:00</span></div></header><main>
